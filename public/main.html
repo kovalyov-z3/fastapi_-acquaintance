@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sharer.COM</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="message"></div>
+     <p>
+        Введите длинную ссылку: <br /> 
+        <input name="email" id="email"/>
+    </p>
+     <p>
+    </p>
+    <button onclick="send()">Отправить</button>
+    <a href="/all_links"> <button >Все ссылки</button> </a>
+<script>
+    async function send(){
+ 
+        // получаем введеное в поле имя и возраст
+        const long_url = document.getElementById("email").value;
+        
+ 
+        // отправляем запрос
+        const response = await fetch("/", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    long_url: long_url,
+                }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("message").textContent = data.message;
+            }
+            else
+                console.log(response);
+    }
+   
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sharer.COM</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div id="message"></div>
+     <p>
+        Введите логин: <br /> 
+        <input name="email" id="email"/>
+    </p>
+     <p>
+        Введите пароль: <br /> 
+        <input name="hashed_password" id="hashed_password" type="password" />
+    </p>
+    <button onclick="send()">Отправить</button>
+    
+<script>
+    async function send(){
+ 
+        // получаем введеное в поле имя и возраст
+        const email = document.getElementById("email").value;
+        const hashed_password = document.getElementById("hashed_password").value;
+ 
+        // отправляем запрос
+        const response = await fetch("/login/index", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    email: email,
+                    hashed_password: hashed_password
+                }),
+            });
+            if (response.ok) {
+         const data = await response.json();
+         document.getElementById("message").textContent = data.message;
+     }
+     else
+         console.log(response);
+    }
+</script>
+</body>
+</html>
